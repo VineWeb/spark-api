@@ -1,6 +1,6 @@
 {
   "name": "spark-api",
-  "version": "1.0.4",
+  "version": "1.0.7",
   "main": "lib/index.js",
   "module": "es/index.mjs",
   "scripts": {

@@ -1,6 +1,6 @@
 import CryptoJS from 'crypto-js';
 import { Socket } from './socket.mjs';
-class Spark {
+export class Spark {
   secret =  '';
   key = '';
   appid= '';
@@ -122,4 +122,5 @@ class Spark {
   }
 }
 
-export { Spark };
+
+export default Spark;
