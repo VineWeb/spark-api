@@ -1,0 +1,37 @@
+{
+  "name": "sparkjs",
+  "version": "1.0.0",
+  "main": "lib/index.js",
+  "module": "es/index.mjs",
+  "scripts": {
+    "start": "node lib/index.js",
+    "build": "babel src -d lib",
+    "common:test": "node test/test.js",
+    "es:test": "node test/estest.js"
+  },
+  "dependencies": {
+    "crypto-js": "^3.3.0",
+    "ws": "^8.4.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.17.0",
+    "@babel/core": "^7.17.2",
+    "@babel/preset-env": "^7.17.1"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "your-repository-url"
+  },
+  "keywords": [
+    "星火模型",
+    "星火大模型"
+  ],
+  "author": "vineweb",
+  "license": "MIT",
+  "description": "星火模型  星火大模型"
+}
