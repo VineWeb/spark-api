@@ -11,7 +11,12 @@ export class Spark {
   constructor({ key, secret, appid, version, id, charId }) {
     if (!key || !secret) throw new Error('Invalid Key Or Secret');
     if (!appid) throw new Error('Plesae input appid');
-    if (version) this.version = version;
+    if (version) {
+      if (String(version).length === 1 && Number(version)<4) {
+        version=`${version}.1`
+      }
+      this.version = version;
+    }
     this.appid = appid;
     this.secret = secret;
     this.key = key;
