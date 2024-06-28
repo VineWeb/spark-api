@@ -4,7 +4,7 @@ export class Spark {
   secret =  '';
   key = '';
   appid= '';
-  version= 2;
+  version= 2.1;
   uid= 'admin';
   chatId= ''
   Requesting= false;
@@ -23,8 +23,8 @@ export class Spark {
   _getWebsocketUrl() {
     const host = `spark-api.xf-yun.com`
     const date = new Date().toGMTString()
-    const wurl = `wss://spark-api.xf-yun.com/v${this.version}.1/chat`
-    const signatureOrigin = `host: ${host}\ndate: ${date}\nGET /v${this.version}.1/chat HTTP/1.1`
+    const wurl = `wss://spark-api.xf-yun.com/v${this.version}/chat`
+    const signatureOrigin = `host: ${host}\ndate: ${date}\nGET /v${this.version}/chat HTTP/1.1`
     const signatureSha = CryptoJS.HmacSHA256(signatureOrigin, this.secret)
     const signature = signatureSha.toString(CryptoJS.enc.Base64)
     const authorizationOrigin = `api_key="${this.key}", algorithm="hmac-sha256", headers="host date request-line", signature="${signature}"`
@@ -34,9 +34,11 @@ export class Spark {
   }
 
   static _domains = {
-    '1': 'general',
-    '2': 'generalv2',
-    '3': 'generalv3'
+    '1.1': 'general',
+    '2.1': 'generalv2',
+    '3.1': 'generalv3',
+    '3.5': 'generalv3.5',
+    '4.0': '4.0Ultra',
   }
   
   static _maxtokens = {
