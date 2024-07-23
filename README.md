@@ -36,6 +36,32 @@ spark.send('你是谁').then(response => {
   console.error(error);
 });
 
+## Version  default '3.1'
+```js 
+  const versionMap = new Map([
+    ['Lite', 'wss://spark-api.xf-yun.com/v1.1/chat'],
+    ['1.1', 'wss://spark-api.xf-yun.com/v1.1/chat'],
+    ['V2.0', 'wss://spark-api.xf-yun.com/v2.1/chat'],
+    ['2.1', 'wss://spark-api.xf-yun.com/v2.1/chat'],
+    ['Pro', 'wss://spark-api.xf-yun.com/v3.1/chat'],
+    ['3.1', 'wss://spark-api.xf-yun.com/v3.1/chat'],
+    ['Pro-128K', 'wss://spark-api.xf-yun.com/chat/pro-128k'],
+    ['pro-128k', 'wss://spark-api.xf-yun.com/chat/pro-128k'],
+    ['Max', 'wss://spark-api.xf-yun.com/v3.5/chat'],
+    ['3.5', 'wss://spark-api.xf-yun.com/v3.5/chat'],
+    ['4.0 Ultra', 'wss://spark-api.xf-yun.com/v4.0/chat'],
+    ['4.0', 'wss://spark-api.xf-yun.com/v4.0/chat'],
+  ]
+  )
+
+  const spark = new Spark({
+    secret: 'secret',
+    key: 'key',
+    appid: 'appid',
+    version: '4.0 Ultra'
+  });
+```
+
 ```
 ## License
 

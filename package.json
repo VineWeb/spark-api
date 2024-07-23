@@ -1,6 +1,6 @@
 {
   "name": "spark-api",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "main": "lib/index.js",
   "module": "es/index.mjs",
   "scripts": {
@@ -25,7 +25,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "your-repository-url"
+    "url": "git+https://github.com/VineWeb/spark-api.git"
   },
   "keywords": [
     "星火模型",

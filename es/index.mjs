@@ -4,10 +4,26 @@ export class Spark {
   secret =  '';
   key = '';
   appid= '';
-  version= 2.1;
+  version= '3.1';
+  versions= ['1.1', '2.1', '3.1', 'pro-128k', '3.5', '4.0', 'Lite', 'V2.0', 'Pro', 'Pro-128K', 'Max','4.0 Ultra']
+  versionMap = new Map([
+    ['Lite', 'wss://spark-api.xf-yun.com/v1.1/chat'],
+    ['1.1', 'wss://spark-api.xf-yun.com/v1.1/chat'],
+    ['V2.0', 'wss://spark-api.xf-yun.com/v2.1/chat'],
+    ['2.1', 'wss://spark-api.xf-yun.com/v2.1/chat'],
+    ['Pro', 'wss://spark-api.xf-yun.com/v3.1/chat'],
+    ['3.1', 'wss://spark-api.xf-yun.com/v3.1/chat'],
+    ['Pro-128K', 'wss://spark-api.xf-yun.com/chat/pro-128k'],
+    ['pro-128k', 'wss://spark-api.xf-yun.com/chat/pro-128k'],
+    ['Max', 'wss://spark-api.xf-yun.com/v3.5/chat'],
+    ['3.5', 'wss://spark-api.xf-yun.com/v3.5/chat'],
+    ['4.0 Ultra', 'wss://spark-api.xf-yun.com/v4.0/chat'],
+    ['4.0', 'wss://spark-api.xf-yun.com/v4.0/chat'],
+  ])
   uid= 'admin';
   chatId= ''
   Requesting= false;
+  wurl = `wss://spark-api.xf-yun.com/v${this.version}/chat`
   constructor({ key, secret, appid, version, id, charId }) {
     if (!key || !secret) throw new Error('Invalid Key Or Secret');
     if (!appid) throw new Error('Plesae input appid');
@@ -15,6 +31,7 @@ export class Spark {
       if (String(version).length === 1 && Number(version)<4) {
         version=`${version}.1`
       }
+      if (this.versions.indexOf(version) === -1) throw new Error('Invalid Version');
       this.version = version;
     }
     this.appid = appid;
@@ -28,7 +45,7 @@ export class Spark {
   _getWebsocketUrl() {
     const host = `spark-api.xf-yun.com`
     const date = new Date().toGMTString()
-    const wurl = `wss://spark-api.xf-yun.com/v${this.version}/chat`
+    const wurl = this.versionMap.get(this.version)
     const signatureOrigin = `host: ${host}\ndate: ${date}\nGET /v${this.version}/chat HTTP/1.1`
     const signatureSha = CryptoJS.HmacSHA256(signatureOrigin, this.secret)
     const signature = signatureSha.toString(CryptoJS.enc.Base64)
@@ -44,6 +61,12 @@ export class Spark {
     '3.1': 'generalv3',
     '3.5': 'generalv3.5',
     '4.0': '4.0Ultra',
+    'Lite': 'general',
+    'V2.0': 'generalv2',
+    'Pro': 'generalv3',
+    'Pro-128K': 'pro-128k',
+    'Max': 'generalv3.5',
+    '4.0 Ultra': '4.0Ultra',
   }
   
   static _maxtokens = {
@@ -53,6 +76,7 @@ export class Spark {
   }
   // 调用信息的处理
   _getParams(content) {
+    const domain = Spark._domains[this.version]
     const data = {
       header: {
         app_id: this.appid,
@@ -60,7 +84,7 @@ export class Spark {
       },
       parameter: {
         chat: {
-          domain: Spark._domains[this.version],
+          domain,
           temperature: 0.5, // 取值为[0,1],默认为0.5  核采样阈值。用于决定结果随机性，取值越高随机性越强即相同的问题得到的不同答案的可能性越高
           max_tokens: 2048, // 默认为2048 型回答的tokens的最大长度 参考this._maxtokens
           top_k: 4, // 取值为[1，6],默认为4	从k个候选中随机选择⼀个（⾮等概率）
